@@ -1,4 +1,4 @@
-# h5
+# msweb
 
 vue3 + vite + vant
 
@@ -7,7 +7,7 @@ vue3 + vite + vant
 ```
 npm init vue
 
-✔ Project name: … h5
+✔ Project name: … msweb
 ✔ Add TypeScript? … No
 ✔ Add JSX Support? … Yes
 ✔ Add Vue Router for Single Page Application development? … Yes

@@ -1,9 +1,5 @@
-<script setup>
-</script>
-
 <template>
-    <van-empty image="error" description="401" />
+    <el-empty description="401" />
 </template>
 
-<style scoped>
-</style>
+<script setup></script>

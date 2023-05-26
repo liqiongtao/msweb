@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#app {
     width: 100%;
     height: 100%;
     position: relative;
@@ -7,7 +8,6 @@ body {
 }
 
 body {
-    max-width: 640PX;
     margin: auto !important;
     background-color: #fff;
 }
@@ -16,11 +16,25 @@ body::-webkit-scrollbar-track {
     opacity: 0;
 }
 
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
 * {
-    -webkit-user-select: none;
+    /* -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    user-select: none; */
     -webkit-touch-callout: none;
     -webkit-user-drag: none;
 }
@@ -66,4 +80,9 @@ html::-webkit-scrollbar {
 
 #NOVCONSOLE div[id="__vconsole"] {
     display: none;
+}
+
+.el-dialog__header {
+    margin-right: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
 }

@@ -9,6 +9,10 @@ export const routes = [
         component: () => import('@/views/common/401.vue')
     },
     {
+        path: '/login', name: 'login', meta: { title: '登录' },
+        component: () => import('@/views/common/login.vue')
+    },
+    {
         path: '/', component: () => import('@/views/layout/index.vue'),
         children: [
             {

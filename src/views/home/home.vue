@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <van-skeleton title :row="3" />
+    <el-empty description="欢迎使用" />
 </template>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 {
-    "name": "h5",
+    "name": "msweb",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -16,9 +16,9 @@
     "dependencies": {
         "axios": "^1.4.0",
         "crypto-js": "^4.1.1",
+        "element-plus": "^2.3.4",
         "js-cookie": "^3.0.5",
         "moment": "^2.29.4",
-        "vant": "^4.3.1",
         "vue": "^3.2.47",
         "vue-router": "^4.1.6",
         "vuex": "^4.1.0"
@@ -30,10 +30,11 @@
         "@vue/eslint-config-prettier": "^7.1.0",
         "eslint": "^8.34.0",
         "eslint-plugin-vue": "^9.9.0",
-        "postcss-px-to-viewport": "^1.1.1",
         "prettier": "^2.8.4",
         "sass": "^1.62.1",
+        "unplugin-auto-import": "^0.15.3",
         "unplugin-vue-components": "^0.24.1",
-        "vite": "^4.1.4"
+        "vite": "^4.1.4",
+        "vite-plugin-vue-setup-extend": "^0.4.0"
     }
 }
