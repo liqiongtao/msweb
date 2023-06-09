@@ -39,7 +39,7 @@ export const mutations = {
         state.username = params.username || ''
         state.permissions = params.permissions || []
 
-        session.set('__login_token__', state.token)
+        session.set('__user_token__', state.token)
         session.set('__user_username__', state.username)
         session.set('__user_permissions__', JSON.stringify(state.permissions))
     },
@@ -49,7 +49,7 @@ export const mutations = {
         state.username = ''
         state.permissions = []
 
-        session.remove('__login_token__')
+        session.remove('__user_token__')
         session.remove('__user_username__')
         session.remove('__user_permissions__')
     }

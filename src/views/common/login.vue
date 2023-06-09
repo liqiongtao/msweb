@@ -1,61 +1,114 @@
+<script setup>
+    import { ElNotification } from 'element-plus'
+    import { post } from '@/utils/http'
+
+    const { commit } = useStore()
+    const router = useRouter()
+
+    const captcha_img = ref('')
+    const formRef = ref()
+    const form = ref({
+        account: '',
+        password: '',
+        captcha_code: '',
+        captcha_id: ''
+    })
+    const rules = ref({
+        account: [
+            { required: true, message: '请输入登录账号', trigger: 'blur' }
+        ],
+        password: [
+            { required: true, message: '请输入登录密码', trigger: 'blur' }
+        ],
+        captcha_code: [
+            { required: true, message: '请输入验证码', trigger: 'blur' }
+        ]
+    })
+
+    const submitForm = () => {
+        formRef.value.validate((valid) => {
+            if (!valid) return
+
+            post('/login', form.value).then(res => {
+                if (res.code) {
+                    refreshCaptchaImg()
+                    ElNotification.error(res.message || '操作失败')
+                    return
+                }
+
+                commit('setLoginInfo', res.data || {})
+                ElNotification.success('登录成功！')
+
+                setTimeout(() => {
+                    router.push({ name: 'home' })
+                }, 300)
+            })
+        })
+    }
+
+    const refreshCaptchaImg = () => {
+        post('/captcha/get', {}).then(res => {
+            captcha_img.value = res.data.base64image
+            form.value.captcha_code = ''
+            form.value.captcha_id = res.data.id
+        })
+    }
+
+    refreshCaptchaImg()
+</script>
+
 <template>
-    <video class="video-bg" src="@/assets/bg.mp4" autoplay muted="muted" loop></video>
-    <div class="login-model">
-        <h1>
-            <img src="@/assets/logo.svg" />
-            <span>管理系统平台</span>
-        </h1>
-        <el-input v-model="account" placeholder="请输入账号"></el-input>
-        <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
-        <el-button @click="loginIn">登录</el-button>
+    <div class="video-container">
+        <video src="@/assets/bg.mp4" autoplay muted="muted" loop></video>
+    </div>
+    <div class="login-page">
+        <div class="login-model">
+            <h1><span>管理系统平台</span></h1>
+            <el-form ref="formRef" :model="form" :rules="rules">
+                <el-form-item prop="account">
+                    <el-input v-model="form.account" placeholder="登录账号" @keyup.enter="submitForm" />
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input v-model="form.password" placeholder="登录密码" type="password" show-password @keyup.enter="submitForm" />
+                </el-form-item>
+                <el-form-item class="ipt-captcha-bar" prop="captcha_code">
+                    <el-input maxLength="4" v-model="form.captcha_code" placeholder="点击刷新验证码" @keyup.enter="submitForm"></el-input>
+                    <img v-if="captcha_img" @click="refreshCaptchaImg" :src="captcha_img" />
+                </el-form-item>
+                <el-button class="button" type="primary" @click="submitForm">登 录</el-button>
+            </el-form>
+        </div>
     </div>
 </template>
 
-<script setup>
-    import { ElMessage } from 'element-plus'
-    import { session } from '@/utils/cache'
-
-    const router = useRouter()
-    const account = ref('')
-    const password = ref('')
-
-    const loginIn = () => {
-        if (account.value == '') {
-            ElMessage.error('请输入账号')
-            return
-        }
-        if (password.value == '') {
-            ElMessage.error('请输入密码')
-            return
-        }
-        if (password.value.substr(0, 4) != 'mko0') {
-            ElMessage.error('密码输入错误')
-            return
-        }
-        session.set('account', account.value)
-        router.push({ name: 'home' })
-    }
-
-</script>
-
 <style lang="scss" scoped>
-    .video-bg {
+    .video-container {
       width: 100%;
       height: 100%;
-      min-height: 680px;
-      object-fit: fill;
-      position: absolute;
+      overflow: hidden;
+      video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: fill;
+      }
+    }
+    .login-page {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .login-model {
       width: 400px;
-      height: 300px;
+      min-height: 352px;
       padding: 20px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
       border-radius: 10px;
       background: #ffffff;
       h1 {
@@ -68,21 +121,23 @@
           font-size: 30px;
           color: #07154f;
         }
-        img {
-          width: 50px;
-          height: 50px;
+      }
+      .el-form {
+        margin-top: 20px;
+        .ipt-captcha-bar {
+          position: relative;
+          img {
+            width: 84px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
         }
-      }
-      .el-input {
-        margin-top: 20px;
-        height: 36px;
-      }
-      .el-button {
-        width: 100%;
-        margin-top: 20px;
-        height: 36px;
-        color: #ffffff;
-        background: #0d2ea8;
+        .el-button {
+          width: 100%;
+          margin-top: 20px;
+        }
       }
     }
 </style>
