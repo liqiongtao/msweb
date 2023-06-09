@@ -1,5 +1,5 @@
 <script setup>
-    import { ElNotification } from 'element-plus'
+    import { ElMessage } from 'element-plus'
     import { post } from '@/utils/http'
 
     const { commit } = useStore()
@@ -32,12 +32,12 @@
             post('/login', form.value).then(res => {
                 if (res.code) {
                     refreshCaptchaImg()
-                    ElNotification.error(res.message || '操作失败')
+                    ElMessage.error(res.message || '操作失败')
                     return
                 }
 
                 commit('setLoginInfo', res.data || {})
-                ElNotification.success('登录成功！')
+                ElMessage.success('登录成功！')
 
                 setTimeout(() => {
                     router.push({ name: 'home' })
