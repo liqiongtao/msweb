@@ -24,4 +24,7 @@
         flex-direction: row;
       }
     }
+    .el-main {
+      margin-bottom: 59px;
+    }
 </style>
