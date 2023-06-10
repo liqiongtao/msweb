@@ -1,18 +1,30 @@
 <script setup>
-    import { useDark, useToggle } from '@vueuse/core'
+    import { useDark } from '@vueuse/core'
+    import { Opportunity, Sunny } from '@element-plus/icons-vue'
+    import ThePassword from './the-password.vue'
+
+    const router = useRouter()
+    const { state, commit } = useStore()
 
     const isDark = useDark()
-    const toggleDark = useToggle(isDark)
-
-    const { state } = useStore()
 
     const title = import.meta.env.VITE_APP_SITE_TITLE
     const username = computed(() => state.username)
 
-    const handleSelect = () => {
+    const visiablePassword = ref(false)
 
+    const handleSelect = (index) => {
+        switch (index) {
+            case 'password':
+                visiablePassword.value = true
+                break
+
+            case 'logout':
+                commit('clearLoginStatus')
+                router.push({ name: 'login' })
+                break
+        }
     }
-
 </script>
 
 <template>
@@ -21,7 +33,7 @@
             <span>{{ title }}</span>
         </div>
         <div class="float-right">
-            <el-switch size="small" v-model="isDark" />
+            <el-switch size="small" v-model="isDark" :active-icon="Opportunity" :inactive-icon="Sunny" inline-prompt />
 
             <el-menu mode="horizontal" :ellipsis="false" @select="handleSelect">
                 <el-sub-menu index="user">
@@ -32,6 +44,8 @@
             </el-menu>
         </div>
     </el-header>
+
+    <the-password :visiable="visiablePassword" @close="visiablePassword=false"></the-password>
 </template>
 
 <style lang="scss" scoped>
@@ -56,5 +70,8 @@
     .el-menu,
     .el-menu .el-sub-menu__title {
       border: 0px !important;
+    }
+    ::v-deep .el-switch--small .el-switch__core .el-switch__action {
+      display: none !important;
     }
 </style>
