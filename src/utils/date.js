@@ -9,7 +9,7 @@ export function datetime(n = 0) {
 }
 
 export function dateFormat(ts, format = 'YYYY-MM-DD') {
-    if (ts.length == 10) {
+    if (String(ts).length == 10) {
         ts *= 1000
     }
     return moment(ts).format(format)
