@@ -41,7 +41,7 @@
 
                 setTimeout(() => {
                     router.push({ name: 'home' })
-                }, 300)
+                }, 600)
             })
         })
     }
@@ -59,7 +59,7 @@
 
 <template>
     <div class="video-container">
-        <video src="@/assets/bg.mp4" autoplay muted="muted" loop></video>
+        <video src="https://video-ai.oss-cn-beijing.aliyuncs.com/ae/2d/bg_322d9057d362cc5c.mp4" autoplay muted="muted" loop></video>
     </div>
     <div class="login-page">
         <div class="login-model">

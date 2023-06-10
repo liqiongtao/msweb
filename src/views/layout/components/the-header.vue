@@ -1,4 +1,9 @@
 <script setup>
+    import { useDark, useToggle } from '@vueuse/core'
+
+    const isDark = useDark()
+    const toggleDark = useToggle(isDark)
+
     const { state } = useStore()
 
     const title = import.meta.env.VITE_APP_SITE_TITLE
@@ -7,6 +12,7 @@
     const handleSelect = () => {
 
     }
+
 </script>
 
 <template>
@@ -15,6 +21,8 @@
             <span>{{ title }}</span>
         </div>
         <div class="float-right">
+            <el-switch size="small" v-model="isDark" />
+
             <el-menu mode="horizontal" :ellipsis="false" @select="handleSelect">
                 <el-sub-menu index="user">
                     <template #title>hi {{ username }}</template>
@@ -29,13 +37,18 @@
 <style lang="scss" scoped>
     .el-header {
       height: 60px;
-      border-bottom: 1px solid rgba($color: #f2f6fc, $alpha: 1);
-      background-color: rgba($color: #ffffff, $alpha: 1);
+      border-bottom: 1px solid var(--el-border-color);
+      background-color: var(--el-bg-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .float-right {
       display: flex;
       justify-content: center;
       align-items: center;

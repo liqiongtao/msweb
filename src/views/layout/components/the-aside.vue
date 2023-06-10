@@ -19,8 +19,8 @@
 
 <style lang="scss" scoped>
     .el-aside {
-      border-right: 1px solid rgba($color: #f2f6fc, $alpha: 1);
-      background-color: rgba($color: #ffffff, $alpha: 1);
+      border-right: 1px solid var(--el-border-color);
+      background-color: var(--el-bg-color);
       padding-bottom: 59px;
     }
     .el-menu,
