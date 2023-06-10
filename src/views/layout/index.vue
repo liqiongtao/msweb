@@ -25,6 +25,6 @@
       }
     }
     .el-main {
-      margin-bottom: 59px;
+      padding-bottom: 59px;
     }
 </style>
