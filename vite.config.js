@@ -7,6 +7,8 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 
+const ts = new Date().getTime()
+
 export default ({ mode }) => {
     const env = loadEnv(mode, process.cwd())
     return defineConfig({
@@ -51,18 +53,13 @@ export default ({ mode }) => {
             emptyOutDir: true,
             rollupOptions: {
                 output: {
+                    chunkFileNames: `static/js/[name]-${ts}.js`,
+                    entryFileNames: `static/js/[name]-${ts}.js`,
+                    assetFileNames: `static/[ext]/[name]-${ts}.[ext]`,
                     manualChunks(id) {
                         if (id.includes('node_modules')) {
                             return id.toString().split('node_modules/')[1].split('/')[0].toString()
                         }
-                    },
-                    chunkFileNames: (chunkInfo) => {
-                        const facadeModuleId = chunkInfo.facadeModuleId
-                            ? chunkInfo.facadeModuleId.split('/')
-                            : []
-                        const fileName =
-                            facadeModuleId[facadeModuleId.length - 2] || '[name]'
-                        return `js/${fileName}/[name].[hash].js`
                     }
                 }
             }
