@@ -1,18 +1,61 @@
 <script setup>
+    import { routes } from '@/router/routes'
+    import { computed } from 'vue'
+
+    const { state } = useStore()
+
+    const isSuper = computed(() => state.isSuper)
+    // const permissions = computed(() => state.permissions)
+
+    const loop = (menus) => {
+        return menus.filter(item => {
+            if (item.hide === true) return
+            if (isSuper.value || !item.meta.permissions) {
+                return item
+            }
+            // for (let i of item.meta.permissions) {
+            //     if (permissions.value.includes(i)) {
+            //         return item
+            //     }
+            // }
+            if (item.children && item.children.length) {
+                loop(item.children)
+            }
+        })
+    }
+
+    const menus = loop(routes.filter(i => i.path == '/')[0].children || [])
+
     const isCollapse = ref(false)
-    const handleOpen = () => { }
-    const handleClose = () => { }
 </script>
 
 <template>
     <el-aside width="200px">
-        <el-menu :default-active="$route.path" :collapse="isCollapse" @open="handleOpen" @close="handleClose" router>
-            <el-menu-item index="/home">
-                <el-icon>
-                    <PieChart />
-                </el-icon>
-                <template #title>首页</template>
-            </el-menu-item>
+        <el-menu :default-active="$route.path" :collapse="isCollapse" router>
+            <template v-for="(item1, index1) in menus" :key="index1">
+                <el-sub-menu :index="$router.resolve({name: item1.name}).path" v-if="(item1.children || []).length">
+                    <template v-slot:title>
+                        <el-icon v-if="item1.meta.icon">
+                            <component :is="item1.meta.icon"></component>
+                        </el-icon>
+                        <span>{{item1.meta.title}}</span>
+                    </template>
+                    <template v-for="(item2, index2) in (item1.children || [])" :key="index2">
+                        <el-menu-item :index="$router.resolve({name: item2.name}).path">
+                            <template v-slot:title>
+                                <i style="margin-right: 10px"></i>
+                                <span>{{item2.meta.title}}</span>
+                            </template>
+                        </el-menu-item>
+                    </template>
+                </el-sub-menu>
+                <el-menu-item :index="$router.resolve({name: item1.name}).path" v-else>
+                    <el-icon v-if="item1.meta.icon">
+                        <component :is="item1.meta.icon"></component>
+                    </el-icon>
+                    <template v-slot:title>{{item1.meta.title}}</template>
+                </el-menu-item>
+            </template>
         </el-menu>
     </el-aside>
 </template>

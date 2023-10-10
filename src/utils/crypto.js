@@ -1,4 +1,5 @@
 import { MD5, SHA1, AES, enc, mode, pad } from 'crypto-js'
+import { debug } from './log'
 
 export function md5(str) {
     return String(MD5(str)).toUpperCase()
@@ -31,7 +32,7 @@ export function encrypt(data) {
         try {
             data = JSON.stringify(data)
         } catch (error) {
-            console.log('encrypt error:', error)
+            debug('encrypt error:', error)
             return
         }
     }

@@ -14,3 +14,10 @@ export function dateFormat(ts, format = 'YYYY-MM-DD') {
     }
     return moment(ts).format(format)
 }
+
+export function formatDateTime(ts, format = 'MM-DD HH:mm') {
+    if (String(ts).length == 10) {
+        ts *= 1000
+    }
+    return moment(ts).format(format)
+}

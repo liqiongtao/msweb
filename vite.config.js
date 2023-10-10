@@ -1,5 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
-import path from 'path'
+import { fileURLToPath, URL } from 'url'
 import vue from '@vitejs/plugin-vue'
 import vueSetupExend from 'vite-plugin-vue-setup-extend'
 import ElementPlus from 'unplugin-element-plus/vite'
@@ -11,8 +11,9 @@ const ts = new Date().getTime()
 
 export default ({ mode }) => {
     const env = loadEnv(mode, process.cwd())
+
     return defineConfig({
-        base: env.VITE_ROUTER_BASE,
+        base: env.VITE_BASE_URL,
         plugins: [
             vue(),
             vueSetupExend(),
@@ -32,7 +33,7 @@ export default ({ mode }) => {
         ],
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, './src')
+                '@': fileURLToPath(new URL('./src', import.meta.url))
             }
         },
         css: {
@@ -66,7 +67,7 @@ export default ({ mode }) => {
         },
         server: {
             open: true,
-            port: 3301,
+            port: 8899,
             hmr: { overlay: false }
         }
     })

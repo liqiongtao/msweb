@@ -8,6 +8,9 @@
 
     const isDark = useDark()
 
+    // 设置默认模式为light
+    isDark.value = false
+
     const title = import.meta.env.VITE_APP_SITE_TITLE
     const username = computed(() => state.username)
 
@@ -61,6 +64,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      span {
+        color: var(--el-color-primary);
+        font-size: 20px;
+        font-weight: 400;
+      }
     }
     .float-right {
       display: flex;

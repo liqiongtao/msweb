@@ -1,13 +1,13 @@
 import axios from 'axios'
 import store from '@/store'
-import { md5, sha1 } from '@/utils/crypto'
+import { md5, sha1, encrypt, decrypt } from '@/utils/crypto'
 import { debug } from '@/utils/log'
 
 var instance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: {
         'Content-Type': 'application/json',
-        'X-Request-Source': 'web??'
+        'X-Request-AppId': md5(import.meta.env.VITE_APP_KEY)
     },
     responseType: 'json',
     timeout: 30000
@@ -80,8 +80,11 @@ export function get(uri) {
 }
 
 export function post(uri, params) {
-    return instance.post(uri, params || {}).then(res => {
+    return instance.post(uri, encrypt(params || {})).then(res => {
         var rst = res.data || {}
+        if (rst.data) {
+            rst.data = JSON.parse(decrypt(rst.data) || '{}') || {}
+        }
         debug(`[POST] uri=${uri}`, `params=${JSON.stringify(params)}`, 'result=', rst)
         return Promise.resolve(rst)
     })

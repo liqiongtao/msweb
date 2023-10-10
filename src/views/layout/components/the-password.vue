@@ -35,7 +35,7 @@
         formRef.value.validate((valid) => {
             if (!valid) return
 
-            post('/password', form.value).then(res => {
+            post('/admin/password', form.value).then(res => {
                 if (res.code) {
                     ElNotification.error(res.message || '操作失败')
                     return

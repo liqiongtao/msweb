@@ -5,6 +5,8 @@
     const { commit } = useStore()
     const router = useRouter()
 
+    const title = import.meta.env.VITE_APP_SITE_TITLE
+
     const captcha_img = ref('')
     const formRef = ref()
     const form = ref({
@@ -59,11 +61,11 @@
 
 <template>
     <div class="video-container">
-        <video src="https://video-ai.oss-cn-beijing.aliyuncs.com/ae/2d/bg_322d9057d362cc5c.mp4" autoplay muted="muted" loop></video>
+        <video src="https://s.shuzhuo.cn/static/ae/2d/bg_322d9057d362cc5c.mp4" autoplay muted="muted" loop></video>
     </div>
     <div class="login-page">
         <div class="login-model">
-            <h1><span>管理系统平台</span></h1>
+            <h1><span>{{title}}</span></h1>
             <el-form ref="formRef" :model="form" :rules="rules">
                 <el-form-item prop="account">
                     <el-input v-model="form.account" placeholder="登录账号" @keyup.enter="submitForm" />
