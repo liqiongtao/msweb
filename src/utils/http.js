@@ -71,21 +71,40 @@ instance.interceptors.response.use(
     }
 )
 
-export function get(uri) {
-    return instance.get(uri).then(res => {
-        var rst = (res || {}).data || {}
-        debug(`[GET] uri=${uri}`, 'result=', rst)
-        return Promise.resolve(rst)
-    })
+export async function get(uri) {
+    const res = await instance.get(uri)
+    var rst = (res || {}).data || {}
+    debug(`[GET] uri=${uri}`, 'result=', rst)
+    return await Promise.resolve(rst)
 }
 
-export function post(uri, params) {
-    return instance.post(uri, encrypt(params || {})).then(res => {
-        var rst = res.data || {}
-        if (rst.data) {
-            rst.data = JSON.parse(decrypt(rst.data) || '{}') || {}
-        }
-        debug(`[POST] uri=${uri}`, `params=${JSON.stringify(params)}`, 'result=', rst)
-        return Promise.resolve(rst)
-    })
+export async function post(uri, params) {
+    const res = await instance.post(uri, encrypt(params || {}))
+    var rst = res.data || {}
+    if (rst.data) {
+        rst.data = JSON.parse(decrypt(rst.data) || '{}') || {}
+    }
+    debug(`[POST] uri=${uri}`, `params=${JSON.stringify(params)}`, 'result=', rst)
+    return await Promise.resolve(rst)
+}
+
+export async function download(uri, params = {}) {
+    const res = await instance.post(uri, encrypt(params || {}), { responseType: 'blob' })
+
+    const link = document.createElement('a')
+
+    link.download = decodeURIComponent((res.headers['content-disposition'] || '').split('filename=')[1] || '')
+    link.style.display = 'none'
+    link.href = URL.createObjectURL(res.data)
+
+    document.body.appendChild(link)
+
+    link.click()
+
+    URL.revokeObjectURL(link.href)
+    document.body.removeChild(link)
+
+    debug(`[Download] uri=${uri}`, `params=${JSON.stringify(params)}`, link.download)
+
+    return await Promise.resolve({ code: 0, message: 'ok' })
 }
