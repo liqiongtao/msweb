@@ -6,8 +6,7 @@ import { debug } from '@/utils/log'
 var instance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: {
-        'Content-Type': 'application/json',
-        'X-Request-AppId': md5(import.meta.env.VITE_APP_KEY)
+        'Content-Type': 'application/json'
     },
     responseType: 'json',
     timeout: 30000
@@ -15,15 +14,7 @@ var instance = axios.create({
 
 instance.interceptors.request.use(
     http => {
-        if (store.state.token) {
-            http.headers.Authorization = store.state.token
-        }
-
-        const ts = parseInt((new Date()).getTime() / 1000)
-
-        http.headers['X-Request-Sign'] = sha1(ts + md5(navigator.userAgent || ''))
-        http.headers['X-Request-Timestamp'] = ts
-
+        http.headers = Object.assign({}, http.headers, getHeaders())
         return http
     },
     error => {
@@ -70,6 +61,22 @@ instance.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+
+export function getHeaders() {
+    const ts = parseInt((new Date()).getTime() / 1000)
+
+    const headers = {
+        'X-Request-AppId': md5(import.meta.env.VITE_APP_KEY),
+        'X-Request-Sign': sha1(ts + md5(navigator.userAgent || '')),
+        'X-Request-Timestamp': ts
+    }
+
+    if (store.state.token) {
+        headers.Authorization = store.state.token
+    }
+
+    return headers
+}
 
 export async function get(uri) {
     const res = await instance.get(uri)
