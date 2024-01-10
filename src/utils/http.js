@@ -88,14 +88,15 @@ export async function post(uri, params) {
     return await Promise.resolve(rst)
 }
 
-export async function download(uri, params = {}) {
+export async function download(uri, params = {}, fileType = '') {
     const res = await instance.post(uri, encrypt(params || {}), { responseType: 'blob' })
 
+    const blob = new Blob([res.data], { type: fileType })
     const link = document.createElement('a')
 
     link.download = decodeURIComponent((res.headers['content-disposition'] || '').split('filename=')[1] || '')
     link.style.display = 'none'
-    link.href = URL.createObjectURL(res.data)
+    link.href = URL.createObjectURL(blob)
 
     document.body.appendChild(link)
 
@@ -107,4 +108,8 @@ export async function download(uri, params = {}) {
     debug(`[Download] uri=${uri}`, `params=${JSON.stringify(params)}`, link.download)
 
     return await Promise.resolve({ code: 0, message: 'ok' })
+}
+
+export async function downloadExcel(uri, params = {}) {
+    return await download(uri, params, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8')
 }
