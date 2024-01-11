@@ -13,17 +13,17 @@ import CheckPermission from '@/components/check-permission.vue'
 
 const app = createApp(App)
 
-for (const [key, component] of Object.entries(ElIcons)) {
-    app.component(key, component)
-}
+app.use(store)
+app.use(router)
 
 app.use(ElementPlus, {
     size: 'large',
     locale: zhCn
 })
 
-app.use(store)
-app.use(router)
+for (const [key, component] of Object.entries(ElIcons)) {
+    app.component(key, component)
+}
 
 app.component('CheckPermission', CheckPermission)
 
