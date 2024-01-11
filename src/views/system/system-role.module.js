@@ -20,19 +20,17 @@ const state = {
 const getters = {
     rules() {
         return {
-            name: [
-                { required: true, message: '请填写', trigger: 'blur' }
-            ]
+            name: [{ required: true, message: '请填写', trigger: 'blur' }]
         }
     }
 }
 
 const actions = {
     getOptions({ state }) {
-        post('/role/options', {}).then(res => {
+        post('/role/options', {}).then((res) => {
             if (res.code) return
             var options = []
-            for (var i of (res.data.list || [])) {
+            for (var i of res.data.list || []) {
                 options.push(Object.assign({}, i))
             }
             state.options = options
@@ -45,7 +43,7 @@ const actions = {
             page_num: state.page.num,
             page_size: state.page.size
         }
-        post('/role/list', data).then(res => {
+        post('/role/list', data).then((res) => {
             state.loading = false
             if (res.code) return
             state.page.total = res.data.total || 0
@@ -63,8 +61,10 @@ const actions = {
     formSubmit({ state, dispatch }, formData) {
         state.loading = true
         var uri = formData.id ? '/role/update' : '/role/create'
-        return post(uri, { ...formData }).then(res => {
-            setTimeout(() => { state.loading = false }, 600)
+        return post(uri, { ...formData }).then((res) => {
+            setTimeout(() => {
+                state.loading = false
+            }, 600)
             if (res.code > 0) {
                 return Promise.resolve(res.message || '操作失败')
             }
@@ -73,7 +73,7 @@ const actions = {
         })
     },
     updateStatus(_, { id, status }) {
-        return post('/role/status', { id, status }).then(res => {
+        return post('/role/status', { id, status }).then((res) => {
             if (res.code > 0) {
                 return Promise.resolve(res.message || '操作失败')
             }

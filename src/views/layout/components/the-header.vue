@@ -1,33 +1,33 @@
 <script setup>
-    import { useDark } from '@vueuse/core'
-    import { Opportunity, Sunny } from '@element-plus/icons-vue'
-    import ThePassword from './the-password.vue'
+import { useDark } from '@vueuse/core'
+import { Opportunity, Sunny } from '@element-plus/icons-vue'
+import ThePassword from './the-password.vue'
 
-    const router = useRouter()
-    const { state, commit } = useStore()
+const router = useRouter()
+const { state, commit } = useStore()
 
-    const isDark = useDark()
+const isDark = useDark()
 
-    // 设置默认模式为light
-    isDark.value = false
+// 设置默认模式为light
+isDark.value = false
 
-    const title = import.meta.env.VITE_APP_SITE_TITLE
-    const username = computed(() => state.username)
+const title = import.meta.env.VITE_APP_SITE_TITLE
+const username = computed(() => state.username)
 
-    const visiablePassword = ref(false)
+const visiablePassword = ref(false)
 
-    const handleSelect = (index) => {
-        switch (index) {
-            case 'password':
-                visiablePassword.value = true
-                break
+const handleSelect = (index) => {
+    switch (index) {
+        case 'password':
+            visiablePassword.value = true
+            break
 
-            case 'logout':
-                commit('clearLoginStatus')
-                router.push({ name: 'login' })
-                break
-        }
+        case 'logout':
+            commit('clearLoginStatus')
+            router.push({ name: 'login' })
+            break
     }
+}
 </script>
 
 <template>
@@ -48,38 +48,38 @@
         </div>
     </el-header>
 
-    <the-password :visiable="visiablePassword" @close="visiablePassword=false"></the-password>
+    <the-password :visiable="visiablePassword" @close="visiablePassword = false"></the-password>
 </template>
 
 <style lang="scss" scoped>
-    .el-header {
-      height: 60px;
-      border-bottom: 1px solid var(--el-border-color);
-      background-color: var(--el-bg-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      span {
+.el-header {
+    height: 60px;
+    border-bottom: 1px solid var(--el-border-color);
+    background-color: var(--el-bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
         color: var(--el-color-primary);
         font-size: 20px;
         font-weight: 400;
-      }
     }
-    .float-right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .el-menu,
-    .el-menu .el-sub-menu__title {
-      border: 0px !important;
-    }
-    ::v-deep .el-switch--small .el-switch__core .el-switch__action {
-      display: none !important;
-    }
+}
+.float-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.el-menu,
+.el-menu .el-sub-menu__title {
+    border: 0px !important;
+}
+::v-deep .el-switch--small .el-switch__core .el-switch__action {
+    display: none !important;
+}
 </style>

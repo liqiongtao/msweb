@@ -13,8 +13,7 @@ const state = {
     loading: false
 }
 
-const getters = {
-}
+const getters = {}
 
 const actions = {
     getPageList({ state }) {
@@ -24,7 +23,7 @@ const actions = {
             page_num: state.page.num,
             page_size: state.page.size
         }
-        post('/log/list', data).then(res => {
+        post('/log/list', data).then((res) => {
             state.loading = false
             if (res.code) return
             state.page.total = res.data.total || 0
@@ -41,7 +40,6 @@ const actions = {
     }
 }
 
-const mutations = {
-}
+const mutations = {}
 
 export default { namespaced: true, state, getters, actions, mutations }

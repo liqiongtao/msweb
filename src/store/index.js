@@ -16,5 +16,9 @@ Object.keys(files).forEach((key) => {
 })
 
 export default createStore({
-    state, getters, actions, mutations, modules
+    state,
+    getters,
+    actions,
+    mutations,
+    modules
 })

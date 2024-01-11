@@ -21,12 +21,14 @@ export const getters = {
         }
         return false
     },
-    hasPermission: (state) => (...v) => {
-        if (state.isSuper) {
-            return true
+    hasPermission:
+        (state) =>
+        (...v) => {
+            if (state.isSuper) {
+                return true
+            }
+            return state.permissions.filter((i) => v.indexOf(i) !== -1).length > 0
         }
-        return state.permissions.filter(i => v.indexOf(i) !== -1).length > 0
-    }
 }
 
 export const actions = {

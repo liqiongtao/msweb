@@ -10,14 +10,14 @@
 -->
 
 <script setup>
-    import { computed } from 'vue'
+import { computed } from 'vue'
 
-    const { getters } = useStore()
+const { getters } = useStore()
 
-    const props = defineProps(['value'])
-    const permissions = (props.value || '').split(',')
+const props = defineProps(['value'])
+const permissions = (props.value || '').split(',')
 
-    const hasPermission = computed(() => getters['hasPermission'])
+const hasPermission = computed(() => getters['hasPermission'])
 </script>
 
 <template>

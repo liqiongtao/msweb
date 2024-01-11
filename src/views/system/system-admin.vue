@@ -1,6 +1,6 @@
 <script setup>
-    import SystemAdminSearch from './components/system-admin-search.vue'
-    import SystemAdminTable from './components/system-admin-table.vue'
+import SystemAdminSearch from './components/system-admin-search.vue'
+import SystemAdminTable from './components/system-admin-table.vue'
 </script>
 
 <template>

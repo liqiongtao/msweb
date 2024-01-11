@@ -13,11 +13,11 @@ var instance = axios.create({
 })
 
 instance.interceptors.request.use(
-    http => {
+    (http) => {
         http.headers = Object.assign({}, http.headers, getHeaders())
         return http
     },
-    error => {
+    (error) => {
         return Promise.reject(error)
     }
 )
@@ -30,7 +30,7 @@ const messages = {
 }
 
 instance.interceptors.response.use(
-    res => {
+    (res) => {
         const code = ((res || {}).data || {}).code
         messages[code] && debug(messages[code])
         if (code == 401) {
@@ -39,7 +39,7 @@ instance.interceptors.response.use(
         }
         return res
     },
-    error => {
+    (error) => {
         if (typeof error == 'string') {
             if (String(error).indexOf('Network Error') !== -1) {
                 debug(messages[500])
@@ -63,7 +63,7 @@ instance.interceptors.response.use(
 )
 
 export function getHeaders() {
-    const ts = parseInt((new Date()).getTime() / 1000)
+    const ts = parseInt(new Date().getTime() / 1000)
 
     const headers = {
         'X-Request-AppId': md5(import.meta.env.VITE_APP_KEY),
@@ -118,5 +118,9 @@ export async function download(uri, params = {}, fileType = '') {
 }
 
 export async function downloadExcel(uri, params = {}) {
-    return await download(uri, params, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8')
+    return await download(
+        uri,
+        params,
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+    )
 }

@@ -6,9 +6,9 @@
         "dev": "vite --mode dev",
         "test": "vite --mode test",
         "prod": "vite --mode prod",
+        "build:dev": "vite build --mode dev",
         "build:test": "vite build --mode test",
         "build:prod": "vite build --mode prod",
-        "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs src",
         "lint:fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix src",
         "format": "prettier --write src/"
