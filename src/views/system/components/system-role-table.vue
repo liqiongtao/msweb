@@ -1,21 +1,21 @@
 <script setup>
-import { useStore } from 'vuex'
-import { computed } from 'vue'
-import { formatDateTime } from '@/utils/date'
+    import { useStore } from 'vuex'
+    import { computed } from 'vue'
+    import { formatDateTime } from '@/utils/date'
 
-const { state, dispatch, commit } = useStore()
+    const { state, dispatch, commit } = useStore()
 
-const page = computed(() => state['system-role'].page)
-const loading = computed(() => state['system-role'].loading)
+    const page = computed(() => state['system-role'].page)
+    const loading = computed(() => state['system-role'].loading)
 
-const getPageList = () => dispatch('system-role/getPageList')
-const updatePageSize = (val) => dispatch('system-role/updatePageSize', val)
-const updatePageNum = (val) => dispatch('system-role/updatePageNum', val)
-const updateStatus = ({ id, status }) => dispatch('system-role/updateStatus', { id, status })
+    const getPageList = () => dispatch('system-role/getPageList')
+    const updatePageSize = (val) => dispatch('system-role/updatePageSize', val)
+    const updatePageNum = (val) => dispatch('system-role/updatePageNum', val)
+    const updateStatus = ({ id, status }) => dispatch('system-role/updateStatus', { id, status })
 
-const handleOpenFormDialog = (fromData) => commit('system-role/openFormDialog', fromData)
+    const handleOpenFormDialog = (fromData) => commit('system-role/openFormDialog', fromData)
 
-getPageList()
+    getPageList()
 </script>
 
 <template>
@@ -35,12 +35,7 @@ getPageList()
             </el-table-column>
             <el-table-column prop="status" label="状态" align="center" width="120px">
                 <template #default="scope">
-                    <el-switch
-                        v-model="scope.row.status"
-                        :active-value="1"
-                        :inactive-value="2"
-                        @change="updateStatus(scope.row)"
-                    />
+                    <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="2" @change="updateStatus(scope.row)" />
                 </template>
             </el-table-column>
             <el-table-column prop="" label="操作" align="center" width="120px">
@@ -50,16 +45,6 @@ getPageList()
             </el-table-column>
         </el-table>
 
-        <el-pagination
-            background
-            @size-change="updatePageSize"
-            @current-change="updatePageNum"
-            :current-page="page.num"
-            :page-size="page.size"
-            :total="page.total"
-            :page-sizes="page.sizes"
-            :layout="page.layout"
-        >
-        </el-pagination>
+        <el-pagination background @size-change="updatePageSize" @current-change="updatePageNum" :current-page="page.num" :page-size="page.size" :total="page.total" :page-sizes="page.sizes" :layout="page.layout"></el-pagination>
     </el-card>
 </template>

@@ -118,9 +118,5 @@ export async function download(uri, params = {}, fileType = '') {
 }
 
 export async function downloadExcel(uri, params = {}) {
-    return await download(
-        uri,
-        params,
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-    )
+    return await download(uri, params, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8')
 }

@@ -1,6 +1,6 @@
 <script setup>
-import SystemLogSearch from './components/system-log-search.vue'
-import SystemLogTable from './components/system-log-table.vue'
+    import SystemLogSearch from './components/system-log-search.vue'
+    import SystemLogTable from './components/system-log-table.vue'
 </script>
 
 <template>

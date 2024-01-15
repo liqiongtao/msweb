@@ -1,6 +1,6 @@
 <script setup>
-import SystemRoleSearch from './components/system-role-search.vue'
-import SystemRoleTable from './components/system-role-table.vue'
+    import SystemRoleSearch from './components/system-role-search.vue'
+    import SystemRoleTable from './components/system-role-table.vue'
 </script>
 
 <template>

@@ -1,32 +1,32 @@
 <script setup>
-import { routes } from '@/router/routes'
-import { computed } from 'vue'
+    import { routes } from '@/router/routes'
+    import { computed } from 'vue'
 
-const { state } = useStore()
+    const { state } = useStore()
 
-const isSuper = computed(() => state.isSuper)
-// const permissions = computed(() => state.permissions)
+    const isSuper = computed(() => state.isSuper)
+    // const permissions = computed(() => state.permissions)
 
-const loop = (menus) => {
-    return menus.filter((item) => {
-        if (item.hide === true) return
-        if (isSuper.value || !item.meta.permissions) {
-            return item
-        }
-        // for (let i of item.meta.permissions) {
-        //     if (permissions.value.includes(i)) {
-        //         return item
-        //     }
-        // }
-        if (item.children && item.children.length) {
-            loop(item.children)
-        }
-    })
-}
+    const loop = (menus) => {
+        return menus.filter((item) => {
+            if (item.hide === true) return
+            if (isSuper.value || !item.meta.permissions) {
+                return item
+            }
+            // for (let i of item.meta.permissions) {
+            //     if (permissions.value.includes(i)) {
+            //         return item
+            //     }
+            // }
+            if (item.children && item.children.length) {
+                loop(item.children)
+            }
+        })
+    }
 
-const menus = loop(routes.filter((i) => i.path == '/')[0].children || [])
+    const menus = loop(routes.filter((i) => i.path == '/')[0].children || [])
 
-const isCollapse = ref(false)
+    const isCollapse = ref(false)
 </script>
 
 <template>
@@ -61,13 +61,13 @@ const isCollapse = ref(false)
 </template>
 
 <style lang="scss" scoped>
-.el-aside {
-    border-right: 1px solid var(--el-border-color);
-    background-color: var(--el-bg-color);
-    padding-bottom: 59px;
-}
-.el-menu,
-.el-menu .el-sub-menu__title {
-    border: 0px !important;
-}
+    .el-aside {
+        border-right: 1px solid var(--el-border-color);
+        background-color: var(--el-bg-color);
+        padding-bottom: 59px;
+    }
+    .el-menu,
+    .el-menu .el-sub-menu__title {
+        border: 0px !important;
+    }
 </style>
