@@ -4,5 +4,5 @@ export function debug(...messages) {
     if (import.meta.env.MODE == 'prod' && !session.get('debug') && !local.get('debug')) {
         return
     }
-    console.log('[msweb]', ...messages)
+    console.log('[web]', ...messages)
 }

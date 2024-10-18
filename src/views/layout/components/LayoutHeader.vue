@@ -1,18 +1,13 @@
 <script setup>
-    import { useDark } from '@vueuse/core'
-    import { Opportunity, Sunny } from '@element-plus/icons-vue'
-    import ThePassword from './the-password.vue'
+    import { useAuthStore } from '@/stores/auth.store'
+    import { reactive, ref } from 'vue'
+    import { useRouter } from 'vue-router'
 
     const router = useRouter()
-    const { state, commit } = useStore()
-
-    const isDark = useDark()
-
-    // 设置默认模式为light
-    isDark.value = false
+    const authState = useAuthStore()
 
     const title = import.meta.env.VITE_APP_SITE_TITLE
-    const username = computed(() => state.username)
+    const loginName = authState.getAuthName()
 
     const visiablePassword = ref(false)
 
@@ -23,7 +18,6 @@
                 break
 
             case 'logout':
-                commit('clearLoginStatus')
                 router.push({ name: 'login' })
                 break
         }
@@ -36,19 +30,15 @@
             <span>{{ title }}</span>
         </div>
         <div class="float-right">
-            <el-switch size="small" v-model="isDark" :active-icon="Opportunity" :inactive-icon="Sunny" inline-prompt />
-
             <el-menu mode="horizontal" :ellipsis="false" @select="handleSelect">
                 <el-sub-menu index="user">
-                    <template #title>hi {{ username }}</template>
+                    <template #title>hi {{ loginName }}</template>
                     <el-menu-item index="password">修改密码</el-menu-item>
                     <el-menu-item index="logout">退出</el-menu-item>
                 </el-sub-menu>
             </el-menu>
         </div>
     </el-header>
-
-    <the-password :visiable="visiablePassword" @close="visiablePassword = false"></the-password>
 </template>
 
 <style lang="scss" scoped>
@@ -79,7 +69,7 @@
     .el-menu .el-sub-menu__title {
         border: 0px !important;
     }
-    ::v-deep .el-switch--small .el-switch__core .el-switch__action {
-        display: none !important;
-    }
+    // ::v-deep .el-switch--small .el-switch__core .el-switch__action {
+    //     display: none !important;
+    // }
 </style>

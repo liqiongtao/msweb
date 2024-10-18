@@ -9,9 +9,9 @@ export function sha1(str) {
     return String(SHA1(str)).toUpperCase()
 }
 
-export function base64encode(raw) {
+export function base64encode(str) {
     try {
-        return enc.Base64.stringify(enc.Utf8.parse(raw))
+        return enc.Base64.stringify(enc.Utf8.parse(str))
     } catch (e) {
         return ''
     }

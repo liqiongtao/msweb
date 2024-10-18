@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-    <router-view></router-view>
+    <el-card>home</el-card>
 </template>
 
 <style lang="scss" scoped></style>

@@ -1,15 +1,15 @@
 <script setup>
-    import TheHeader from './components/the-header.vue'
-    import TheAside from './components/the-aside.vue'
+    import LayoutHeader from './components/LayoutHeader.vue'
+    import LayoutAside from './components/LayoutAside.vue'
 </script>
 
 <template>
     <el-container>
-        <the-header></the-header>
+        <LayoutHeader />
         <el-container>
-            <the-aside></the-aside>
+            <LayoutAside />
             <el-main>
-                <router-view></router-view>
+                <RouterView />
             </el-main>
         </el-container>
     </el-container>

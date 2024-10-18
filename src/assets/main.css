@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-weight: normal;
+    line-height: 1;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+html,
+body,
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

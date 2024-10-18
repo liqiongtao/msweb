@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-    <el-empty description="欢迎使用" />
+    <RouterView />
 </template>
 
 <style lang="scss" scoped></style>
